@@ -1,0 +1,405 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #a855f7;
+    --accent: #ec4899;
+    --background: #0f172a;
+    --glass: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text: #f8fafc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Ambient Background Elements */
+.blob {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    filter: blur(80px);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.3;
+    animation: move 20s infinite alternate;
+}
+
+@keyframes move {
+    from { transform: translate(-20%, -20%); }
+    to { transform: translate(20%, 20%); }
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+/* Form Styling */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: white;
+    outline: none;
+    transition: all 0.3s;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #475569;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    margin-top: 10px;
+}
+
+.btn-outline:hover {
+    background: var(--glass);
+}
+
+.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.success-alert {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #a7f3d0;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Timer Display */
+.timer-display {
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary);
+    text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.3);
+    font-variant-numeric: tabular-nums;
+}
+.timer-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.timer-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--primary);
+    transition: width 1s linear, background 0.3s ease;
+    border-radius: 2px;
+}
+
+.timer-fill.warning { background: #fbbf24; }
+.timer-fill.danger { background: #ef4444; }
+
+/* Question UI */
+.question-card {
+    background: rgba(0,0,0,0.1);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: none !important; /* Force hide one-by-one flow */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.question-card.active {
+    display: block !important;
+    animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #f1f5f9;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.option:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.option input {
+    margin-right: 12px;
+    accent-color: var(--primary);
+    width: 18px;
+    height: 18px;
+}
+
+/* Results UI */
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 8px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    background: var(--glass);
+}
+
+.score-val {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.remark {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--secondary);
+}
+
+.details-item {
+    padding: 15px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.correct-ans { color: #4ade80; font-size: 0.9rem; }
+.wrong-ans { color: #f87171; font-size: 0.9rem; }
+
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.logout-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.logout-link:hover { color: white; }
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-text {
+    position: absolute;
+    right: 0;
+    top: -22px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+/* Difficulty Cards */
+.difficulty-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.difficulty-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 24px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: block;
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+}
+
+.difficulty-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.15);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.4);
+}
+
+.diff-title {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.diff-desc {
+    display: block;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.difficulty-card[value="Easy"] .diff-title { color: #4ade80; }
+.difficulty-card[value="Medium"] .diff-title { color: #fbbf24; }
+.difficulty-card[value="Hard"] .diff-title { color: #f87171; }
+
+/* Review Section */
+.review-section {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.review-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.review-section::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+/* Lockout */
+.lockout-icon {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ef4444;
+}
