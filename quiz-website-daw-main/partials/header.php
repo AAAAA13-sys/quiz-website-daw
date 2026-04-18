@@ -40,8 +40,9 @@
                     <span class="nav-stat"><?php echo $navStats['AppDev']['avg_percentage']; ?>%</span>
                 </a>
             </div>
-            <div class="nav-profile">
+            <div class="nav-actions">
                 <a href="index.php?page=profile" class="profile-emoji" title="User Profile">👤</a>
+                <a href="index.php?page=logout" class="logout-link" title="Logout">🚪</a>
             </div>
         </div>
     </nav>
