@@ -1,0 +1,95 @@
+================================================================================
+QUIZ SYSTEM - CODE HIGHLIGHTS & ARCHITECTURE
+================================================================================
+
+This document provides a detailed overview of the core files and logic implemented 
+in the Quiz System ni Tomas project.
+
+--------------------------------------------------------------------------------
+1. CORE ARCHITECTURE & ROUTING
+--------------------------------------------------------------------------------
+
+[index.php]
+- The main entry point and "Router" of the application.
+- Uses a switch statement to include specific pages based on the 'page' URL parameter.
+- Implements an "Auth Guard" (lines 13-20) that prevents unauthenticated users 
+  from accessing protected pages, redirecting them to login instead.
+- Sets 'profile' as the default landing page for logged-in users.
+
+[includes/config.php]
+- Initializes the session (session_start).
+- Sets global constants like $max_attempts (login lockout) and $difficulty_levels.
+- Centrally includes the database connection.
+
+[includes/db.php]
+- Establishes a secure connection to the 'quiz_system' database using PDO.
+- Configured with error exceptions and associative fetch modes for clean coding.
+
+--------------------------------------------------------------------------------
+2. LOGIC & DATA PROCESSING
+--------------------------------------------------------------------------------
+
+[includes/functions.php]
+- The "Brain" of the project. Contains pure logic functions.
+- loginSystem(): Handles credentials, failed attempts, and time-based lockouts.
+- checkAnswers(): Compares user input with correct data, calculates percentages, 
+  and generates a readable "Remark" (Excellent/Good/Needs Improvement).
+- Mastery Stats: Functions like getGlobalAverage() and getUserMasteryStats() 
+  perform SQL aggregations (AVG, COUNT) to provide real-time performance data.
+- JSON Serialization: Uses json_encode/decode to store complex question reviews 
+  within a single database column (details).
+
+--------------------------------------------------------------------------------
+3. USER PROFILE & HISTORY SYSTEM
+--------------------------------------------------------------------------------
+
+[pages/profile.php]
+- The personalized dashboard for the user.
+- Dynamically fetches and displays global mastery vs category-specific mastery.
+- Uses CSS Grid for a "Constraint-style" clean layout.
+- Embeds the history component to show recent activity.
+
+[pages/history.php]
+- A reusable component that lists previous quiz attempts.
+- Each item is a clickable link pointing to its specific historical result.
+- Provides a clean fallback message if no attempts are found.
+
+[pages/results.php]
+- A dual-purpose script that handles both fresh quiz completions and historical views.
+- Fresh View: Compares answers, saves the attempt to the database one-time, 
+  and provides a "Retry" pathway.
+- Historical View: Fetches attempt details using an ID from the URL, allowing 
+  users to review past mistakes.
+
+--------------------------------------------------------------------------------
+4. USER INTERFACE (UI) & ASSETS
+--------------------------------------------------------------------------------
+
+[partials/header.php]
+- Global header that now features a sticky Top-Navigation bar.
+- Navigation logic: Injects real-time mastery stats (percentages) directly into 
+  the category links using PHP.
+- Features a premium emoji-based profile portal (👤) alongside a smoothly styled, text-wrapped logout button.
+
+[pages/difficulty.php]
+- Clean, focused interface for selecting quiz challenge levels.
+- Ensures a distraction-free experience by removing redundant global actions (like logout links) from the page body, delegating them entirely to the Top-Navigation bar.
+
+[assets/style.css]
+- The design system of the project.
+- Aesthetics: Uses Glassmorphism (semi-transparent backgrounds + blur) and 
+  vibrant HSL gradients.
+- Responsiveness: Implements flexible grids and media queries for mobile devices.
+- Animations: Uses @keyframes for smooth fade-ins and slide effects on cards.
+
+--------------------------------------------------------------------------------
+5. SECURITY FEATURES
+--------------------------------------------------------------------------------
+
+- Prepared Statements: Every single database query uses PDO placeholders (?) 
+  to prevent SQL Injection.
+- Password Hashing: Uses PHP's password_hash() for secure storage and 
+  password_verify() for authentication.
+- Access Control: Session-based verification on every page to prevent 
+  unauthorized access.
+================================================================================
