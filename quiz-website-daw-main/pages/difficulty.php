@@ -52,8 +52,5 @@ include 'partials/header.php';
     <?php endforeach; ?>
 </form>
 
-<div style="text-align: center; margin-top: 20px;">
-    <a href="index.php?page=logout" class="logout-link">Logout</a>
-</div>
 
 <?php include 'partials/footer.php'; ?>

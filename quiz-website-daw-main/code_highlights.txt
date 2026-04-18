@@ -69,7 +69,11 @@ in the Quiz System ni Tomas project.
 - Global header that now features a sticky Top-Navigation bar.
 - Navigation logic: Injects real-time mastery stats (percentages) directly into 
   the category links using PHP.
-- Features a premium emoji-based profile portal (👤).
+- Features a premium emoji-based profile portal (👤) alongside a smoothly styled, text-wrapped logout button.
+
+[pages/difficulty.php]
+- Clean, focused interface for selecting quiz challenge levels.
+- Ensures a distraction-free experience by removing redundant global actions (like logout links) from the page body, delegating them entirely to the Top-Navigation bar.
 
 [assets/style.css]
 - The design system of the project.

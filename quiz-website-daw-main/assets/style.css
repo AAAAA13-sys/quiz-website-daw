@@ -525,7 +525,7 @@ input:focus {
     gap: 15px;
 }
 
-.profile-emoji, .logout-link {
+.profile-emoji {
     font-size: 1.4rem;
     text-decoration: none;
     background: var(--glass);
@@ -539,14 +539,32 @@ input:focus {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.profile-emoji:hover, .logout-link:hover {
+.logout-link {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    background: var(--glass);
+    border: 2px solid var(--glass-border);
+    padding: 8px 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.profile-emoji:hover {
     transform: scale(1.1) translateY(-2px);
     border-color: var(--primary);
     background: rgba(255,255,255,0.1);
 }
 
 .logout-link:hover {
+    transform: scale(1.05) translateY(-2px);
     border-color: #ef4444; /* Red hint for logout */
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
     box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
 }
 

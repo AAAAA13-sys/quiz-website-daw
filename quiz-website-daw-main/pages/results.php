@@ -103,7 +103,6 @@ include 'partials/header.php';
     <?php else: ?>
         <a href="index.php?page=results&retry=true" class="btn">Pick Another Difficulty</a>
     <?php endif; ?>
-    <a href="index.php?page=logout" class="btn btn-outline">Logout</a>
 </div>
 
 <?php include 'partials/footer.php'; ?>

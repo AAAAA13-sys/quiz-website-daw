@@ -38,7 +38,7 @@ include 'partials/header.php';
         <span class="badge" style="display: inline-block;"><?php echo $_SESSION['difficulty']; ?> Mode</span>
     </div>
     <div style="flex: 1; text-align: right;">
-        <a href="index.php?page=logout" class="logout-link" style="font-size: 0.8rem;">Logout</a>
+        
     </div>
 </div>
 
@@ -84,6 +84,19 @@ include 'partials/header.php';
     <!-- Auto-submit hidden field to detect last question -->
     <input type="hidden" name="submit_quiz" value="1">
 </form>
+
+<!-- Custom Notification Modal -->
+<div id="leaveModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;">
+    <div style="background: var(--glass); display: flex; flex-direction: column; gap: 20px; align-items: center; padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); max-width: 400px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+        <div style="font-size: 3rem;">⚠️</div>
+        <h2 style="color: var(--primary); font-size: 1.8rem; margin: 0;">Leave Quiz?</h2>
+        <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.5; margin: 0;">You have an ongoing quiz. Are you sure you want to leave? Your progress will be lost.</p>
+        <div style="display: flex; gap: 15px; margin-top: 15px; width: 100%;">
+            <button type="button" id="cancelLeaveBtn" class="btn btn-outline" style="flex: 1; margin-top: 0;">Cancel</button>
+            <button type="button" id="confirmLeaveBtn" class="btn" style="flex: 1; background: #ef4444; margin-top: 0;">Leave</button>
+        </div>
+    </div>
+</div>
 
 <script>
     let currentIdx = 0;
@@ -172,18 +185,68 @@ include 'partials/header.php';
                 updateProgress();
             }, 300); // Wait for fade out
         } else {
+            isSubmitting = true;
             document.getElementById('quizForm').submit();
         }
     }
+
+    let isSubmitting = false;
 
     function updateProgress() {
         // Progress calculation is handled internally by currentIdx
     }
 
+    // Modal Variables
+    let targetLeaveUrl = null;
+
     // Start everything
     window.onload = () => {
         startTimer();
         updateProgress();
+
+        const leaveModal = document.getElementById('leaveModal');
+
+        // Intercept all link clicks
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && !isSubmitting) {
+                e.preventDefault();
+                targetLeaveUrl = link.href;
+                leaveModal.style.display = 'flex';
+                // Trigger reflow for animation
+                void leaveModal.offsetWidth;
+                leaveModal.style.opacity = '1';
+            }
+        });
+
+        document.getElementById('cancelLeaveBtn').addEventListener('click', function() {
+            leaveModal.style.opacity = '0';
+            setTimeout(() => {
+                leaveModal.style.display = 'none';
+                targetLeaveUrl = null;
+            }, 300);
+        });
+
+        document.getElementById('confirmLeaveBtn').addEventListener('click', function() {
+            if (targetLeaveUrl) {
+                isSubmitting = true; // Bypass beforeunload
+                window.location.href = targetLeaveUrl;
+            }
+        });
+
+        // Warn the user before they leave the page unexpectedly (like closing tab)
+        window.addEventListener('beforeunload', function (e) {
+            if (!isSubmitting) {
+                e.preventDefault();
+                e.returnValue = 'You have an ongoing quiz. Are you sure you want to leave? Your progress will be lost.';
+                return e.returnValue;
+            }
+        });
+
+        // Set flag to true when making a legitimate form submission
+        document.getElementById('quizForm').addEventListener('submit', function () {
+            isSubmitting = true;
+        });
     };
 </script>
 

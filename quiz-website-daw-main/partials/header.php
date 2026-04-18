@@ -42,7 +42,7 @@
             </div>
             <div class="nav-actions">
                 <a href="index.php?page=profile" class="profile-emoji" title="User Profile">👤</a>
-                <a href="index.php?page=logout" class="logout-link" title="Logout">🚪</a>
+                <a href="index.php?page=logout" class="logout-link" title="Logout">Logout</a>
             </div>
         </div>
     </nav>
